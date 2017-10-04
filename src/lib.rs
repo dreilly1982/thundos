@@ -8,12 +8,18 @@ extern crate volatile;
 extern crate spin;
 
 #[macro_use]
+extern crate bitflags;
+
+#[macro_use]
 mod vga_buffer;
+mod multiboot2;
 
 #[no_mangle]
 pub extern fn rust_main() {
     vga_buffer::clear_screen();
-    println!("{}", { println!("inner"); "outer" });
+    for i in 0..10000 {
+        println!("{}", i);
+    }
 
     loop{}
 }
