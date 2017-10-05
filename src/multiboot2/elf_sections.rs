@@ -82,16 +82,17 @@ impl Iterator for ElfSectionIter {
 pub struct ElfSection {
     name_index: u32,
     typ: u32,
-    flags: u64,
-    addr: u64,
+    pub flags: u64,
+    pub addr: u64,
     offset: u64,
-    size: u64,
+    pub size: u64,
     link: u32,
     info: u32,
     addralign: u64,
     entry_size: u64,
 }
 
+#[allow(dead_code)]
 impl ElfSection {
     pub fn section_type(&self) -> ElfSectionType {
         match self.typ {

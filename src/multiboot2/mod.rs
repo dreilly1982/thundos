@@ -27,7 +27,7 @@ pub unsafe fn load(address: usize) -> &'static BootInformation {
 
 #[repr(C)]
 pub struct BootInformation {
-    total_size: u32,
+    pub total_size: u32,
     _reserved: u32,
     first_tag: Tag,
 }
@@ -45,7 +45,7 @@ impl BootInformation {
         self.total_size as usize
     }
 
-    pub fn end_sections_tag(&self) -> Option<&'static ElfSectionsTag> {
+    pub fn elf_sections_tag(&self) -> Option<&'static ElfSectionsTag> {
         self.get_tag(9).map(|tag| unsafe { &*(tag as *const Tag as *const ElfSectionsTag) })
     }
 
@@ -113,11 +113,11 @@ impl fmt::Debug for BootInformation {
             for s in elf_sections_tag.sections() {
                 writeln!(f, "    name: {:15}, S: {:#08X}, E: {:#08X}, L: {:#08X}, F: {:#04X}",
                     string_table.section_name(s), s.start_address(),
-                    s.start_address() + s.size(), s.size(), s.flage().bits())?;
+                    s.start_address() + s.size(), s.size(), s.flags().bits())?;
             }
         }
 
-        writln!(f, "module tags:")?;
+        writeln!(f, "module tags:")?;
         for mt in self.module_tags() {
             writeln!(f, "    name: {:15}, S: {:#010X}, E: {:#010X}",
                 mt.name(), mt.start_address(), mt.end_address())?;

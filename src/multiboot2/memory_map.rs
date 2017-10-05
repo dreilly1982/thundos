@@ -23,8 +23,8 @@ impl MemoryMapTag {
 #[derive(Debug)]
 #[repr(C)]
 pub struct MemoryArea {
-    base_addr: u64,
-    length: u64,
+    pub base_addr: u64,
+    pub length: u64,
     typ: u32,
     _reserved: u32,
 }
